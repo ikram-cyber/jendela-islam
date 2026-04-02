@@ -1,73 +1,69 @@
 const dataIslami = [
-    // --- DOA HARIAN ---
-    { tipe: 'Doa', kelas: 'b-doa', judul: 'Doa Sebelum Tidur', teks: 'Bismika Allahumma ahyaa wa bismika amuut.' },
-    { tipe: 'Doa', kelas: 'b-doa', judul: 'Doa Bangun Tidur', teks: 'Alhamdulillahilladzi ahyanaa ba\'damaa amatanaa wa ilaihin nusyuur.' },
-    { tipe: 'Doa', kelas: 'b-doa', judul: 'Doa Sebelum Makan', teks: 'Allahumma baarik lanaa fiimaa rozaqtanaa wa qinaa azaaban naar.' },
-    { tipe: 'Doa', kelas: 'b-doa', judul: 'Doa Sesudah Makan', teks: 'Alhamdulillahilladzi ath\'amanaa wa saqoonaa wa ja\'alanaa minal muslimiin.' },
-    { tipe: 'Doa', kelas: 'b-doa', judul: 'Doa Masuk WC', teks: 'Allahumma inni a\'udzu bika minal khubutsi wal khabaa-is.' },
-    { tipe: 'Doa', kelas: 'b-doa', judul: 'Doa Keluar WC', teks: 'Ghufraanaka. Alhamdulillahilladzi adzhaba \'annil adzaa wa \'aafaanii.' },
-    { tipe: 'Doa', kelas: 'b-doa', judul: 'Doa Keluar Rumah', teks: 'Bismillahi tawakaltu \'alallahi laa hawla wa laa quwwata illa billah.' },
-    { tipe: 'Doa', kelas: 'b-doa', judul: 'Doa Masuk Rumah', teks: 'Bismillahi walajnaa wa bismillahi kharajnaa wa \'alaa rabbina tawakkalnaa.' },
-    { tipe: 'Doa', kelas: 'b-doa', judul: 'Doa Naik Kendaraan', teks: 'Subhaanalladzii sakhkhara lanaa haadzaa wamaa kunnaa lahu muqriniina wa innaa ilaa rabbinaa lamunqalibuun.' },
-    { tipe: 'Doa', kelas: 'b-doa', judul: 'Doa Belajar', teks: 'Robbi zidnii \'ilmaa, warzuqnii fahmaa.' },
+    // SUNNAH
+    { tipe: 'SUNNAH', kelas: 'b-sunnah', judul: 'Tersenyum', arab: 'تَبَسُّمُكَ فِي وَجْهِ أَخِيكَ لَكَ صَدَقَةٌ', latin: '', teks: 'Senyummu di hadapan saudaramu adalah sedekah. (HR. Tirmidzi)' },
+    { tipe: 'SUNNAH', kelas: 'b-sunnah', judul: 'Makan Tangan Kanan', arab: 'إِذَا أَكَلَ أَحَدُكُمْ فَلْيَأْكُلْ بِيَمِينِهِ', latin: '', teks: 'Jika salah seorang dari kalian makan, makanlah dengan tangan kanannya. (HR. Muslim)' },
+    { tipe: 'SUNNAH', kelas: 'b-sunnah', judul: 'Bersiwak', arab: 'لَوْلاَ أَنْ أَشُقَّ عَلَى أُمَّتِي لأَمَرْتُهُمْ بِالسِّوَاكِ عِنْدَ كُلِّ صَلاَةٍ', latin: '', teks: 'Seandainya tidak memberatkan umatku, niscaya aku perintahkan mereka bersiwak setiap kali shalat. (HR. Bukhari)' },
+    
+    // HADITS
+    { tipe: 'HADITS', kelas: 'b-hadits', judul: 'Niat', arab: 'إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ', latin: '', teks: 'Sesungguhnya setiap amalan tergantung pada niatnya. (HR. Bukhari)' },
+    { tipe: 'HADITS', kelas: 'b-hadits', judul: 'Berbakti Orang Tua', arab: 'رِضَا الرَّبِّ فِي رِضَا الْوَالِدِ', latin: '', teks: 'Ridha Allah tergantung pada ridha orang tua. (HR. Tirmidzi)' },
+    { tipe: 'HADITS', kelas: 'b-hadits', judul: 'Larangan Marah', arab: 'لاَ تَغْضَبْ وَلَكَ الْجَنَّةُ', latin: '', teks: 'Janganlah engkau marah, maka bagimu surga. (HR. Ath-Thabrani)' },
+    { tipe: 'HADITS', kelas: 'b-hadits', judul: 'Kata yang Baik', arab: 'مَنْ كَانَ يُؤْمِنُ بِاللَّهِ وَالْيَوْمِ الآخِرِ فَلْيَقُلْ خَيْرًا أَوْ لِيَصْمُتْ', latin: '', teks: 'Barangsiapa beriman kepada Allah, berkatalah yang baik atau diam. (HR. Bukhari)' },
 
-    // --- HADITS ---
-    { tipe: 'Hadits', kelas: 'b-hadits', judul: 'Keutamaan Niat', teks: 'Sesungguhnya setiap amalan tergantung pada niatnya. (HR. Bukhari & Muslim)' },
-    { tipe: 'Hadits', kelas: 'b-hadits', judul: 'Menuntut Ilmu', teks: 'Menuntut ilmu itu wajib atas setiap muslim. (HR. Ibnu Majah)' },
-    { tipe: 'Hadits', kelas: 'b-hadits', judul: 'Menjaga Lisan', teks: 'Barangsiapa yang beriman kepada Allah dan hari akhir, hendaklah dia berkata baik atau diam. (HR. Bukhari & Muslim)' },
-    { tipe: 'Hadits', kelas: 'b-hadits', judul: 'Kebersihan', teks: 'Kebersihan (kesucian) itu adalah sebagian dari iman. (HR. Muslim)' },
-    { tipe: 'Hadits', kelas: 'b-hadits', judul: 'Kasih Sayang', teks: 'Barangsiapa tidak menyayangi, maka tidak akan disayangi. (HR. Bukhari)' },
-    { tipe: 'Hadits', kelas: 'b-hadits', judul: 'Menebar Salam', teks: 'Sebarkanlah salam di antara kalian. (HR. Muslim)' },
-    { tipe: 'Hadits', kelas: 'b-hadits', judul: 'Keutamaan Doa', teks: 'Doa adalah senjata orang mukmin, tiang agama, dan cahaya langit dan bumi. (HR. Hakim)' },
-
-    // --- SUNNAH ---
-    { tipe: 'Sunnah', kelas: 'b-sunnah', judul: 'Tersenyum', teks: 'Senyummu di hadapan saudaramu adalah sedekah. (HR. Tirmidzi)' },
-    { tipe: 'Sunnah', kelas: 'b-sunnah', judul: 'Makan dengan Tangan Kanan', teks: 'Jika salah seorang dari kalian makan, maka makanlah dengan tangan kanannya. (HR. Muslim)' },
-    { tipe: 'Sunnah', kelas: 'b-sunnah', judul: 'Bersiwak (Sikat Gigi)', teks: 'Seandainya tidak memberatkan umatku, niscaya aku perintahkan mereka bersiwak setiap kali wudhu. (HR. Bukhari)' },
-    { tipe: 'Sunnah', kelas: 'b-sunnah', judul: 'Membaca Bismillah', teks: 'Setiap perkara penting yang tidak dimulai dengan bismillahirrahmanirrahim, maka amalan tersebut terputus (kurang keberkahannya).' },
-    { tipe: 'Sunnah', kelas: 'b-sunnah', judul: 'Tidur Miring ke Kanan', teks: 'Berbaringlah di atas rusuk sebelah kananmu. (HR. Bukhari)' },
-    { tipe: 'Sunnah', kelas: 'b-sunnah', judul: 'Berwudhu Sebelum Tidur', teks: 'Apabila engkau hendak mendatangi tempat tidurmu, maka berwudhulah sebagaimana wudhumu untuk shalat. (HR. Bukhari & Muslim)' }
+    // DOA
+    { tipe: 'DOA', kelas: 'b-doa', judul: 'Doa Makan', arab: 'اللَّهُمَّ بَارِكْ لَنَا فِيمَا رَزَقْتَنَا وَقِنَا عَذَابَ النَّارِ', latin: 'Allahumma baarik lanaa fiimaa rozaqtanaa wa qinaa azaaban naar.', teks: 'Ya Allah, berkahilah kami dalam rezeki yang telah Engkau berikan kepada kami dan peliharalah kami dari siksa api neraka.' },
+    { tipe: 'DOA', kelas: 'b-doa', judul: 'Doa Tidur', arab: 'بِاسْمِكَ اللَّهُمَّ أَحْيَا وَبِاسْمِكَ أَمُوتُ', latin: 'Bismika Allahumma ahyaa wa bismika amuut.', teks: 'Dengan nama-Mu, ya Allah, aku hidup dan dengan nama-Mu aku mati.' },
+    { tipe: 'DOA', kelas: 'b-doa', judul: 'Doa Masuk Masjid', arab: 'اللَّهُمَّ افْتَحْ لِي أَبْوَابَ رَحْمَتِكَ', latin: 'Allahummaftahlii abwaaba rahmatik.', teks: 'Ya Allah, bukakanlah untukku pintu-pintu rahmat-Mu.' },
+    { tipe: 'DOA', kelas: 'b-doa', judul: 'Doa Keluar Masjid', arab: 'اللَّهُمَّ إِنِّي أَسْأَلُكَ مِنْ فَضْلِكَ', latin: 'Allahumma innii as-aluka min fadhlika.', teks: 'Ya Allah, sesungguhnya aku memohon karunia-Mu.' },
+    { tipe: 'DOA', kelas: 'b-doa', judul: 'Doa Sapu Jagad', arab: 'رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ', latin: 'Rabbana aatina fid dunya hasanah wa fil akhirati hasanah wa qina adzaban naar.', teks: 'Ya Tuhan kami, berilah kami kebaikan di dunia dan kebaikan di akhirat dan peliharalah kami dari siksa neraka.' }
 ];
 
 const kontainer = document.getElementById('konten-aplikasi');
+const judulHal = document.getElementById('judul-halaman');
 const kolomCari = document.getElementById('kolom-cari');
+let kategoriSekarang = 'SEMUA';
 
-function tampilkanData(data) {
+function tampilkanData(filter = 'SEMUA', cari = '') {
     kontainer.innerHTML = '';
-    if (data.length === 0) {
-        kontainer.innerHTML = '<p style="text-align:center; margin-top:20px;">Data tidak ditemukan.</p>';
-        return;
-    }
-    data.forEach(item => {
+    const filtered = dataIslami.filter(item => {
+        const matchKategori = filter === 'SEMUA' || item.tipe === filter;
+        const pencarian = cari.toLowerCase();
+        const matchCari = item.judul.toLowerCase().includes(pencarian) || 
+                          item.teks.toLowerCase().includes(pencarian) ||
+                          (item.latin && item.latin.toLowerCase().includes(pencarian));
+        return matchKategori && matchCari;
+    });
+
+    filtered.forEach(item => {
         const card = document.createElement('div');
         card.className = 'card';
+        
+        // Cek apakah ada teks latin (biasanya untuk doa)
+        let htmlLatin = item.latin ? `<div class="teks-latin">${item.latin}</div>` : '';
+        
         card.innerHTML = `
             <span class="badge ${item.kelas}">${item.tipe}</span>
             <h2>${item.judul}</h2>
-            <p>${item.teks}</p>
+            <div class="teks-arab">${item.arab}</div>
+            ${htmlLatin}
+            <div class="teks-terjemahan">${item.teks}</div>
         `;
         kontainer.appendChild(card);
     });
 }
 
-// Tampilkan semua data saat pertama kali dibuka
-tampilkanData(dataIslami);
+function filterKategori(kat, el) {
+    kategoriSekarang = kat;
+    judulHal.innerText = kat === 'SEMUA' ? 'Semua Data' : 'Kumpulan ' + kat;
+    document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+    el.classList.add('active');
+    tampilkanData(kat, kolomCari.value);
+}
 
-// Fitur Pencarian Real-time
-kolomCari.addEventListener('input', (e) => {
-    const kataKunci = e.target.value.toLowerCase();
-    const hasilFilter = dataIslami.filter(item => 
-        item.judul.toLowerCase().includes(kataKunci) || 
-        item.teks.toLowerCase().includes(kataKunci) ||
-        item.tipe.toLowerCase().includes(kataKunci)
-    );
-    tampilkanData(hasilFilter);
-});
+kolomCari.addEventListener('input', () => tampilkanData(kategoriSekarang, kolomCari.value));
 
-// Registrasi Service Worker untuk PWA
+tampilkanData();
+
 if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js')
-            .catch(err => console.error('Pendaftaran SW Gagal', err));
-    });
+    window.addEventListener('load', () => navigator.serviceWorker.register('sw.js'));
 }
