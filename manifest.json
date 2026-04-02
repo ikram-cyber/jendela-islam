@@ -1,0 +1,15 @@
+{
+  "name": "Sunnah Hadits Doa App",
+  "short_name": "SunnahApp",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#128C7E",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3253/3253139.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
