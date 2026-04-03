@@ -1,5 +1,7 @@
 {
   "projects": {
     "default": "aplikasi-sunnah-ku"
-  }
+  },
+  "targets": {},
+  "etags": {}
 }
