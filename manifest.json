@@ -1,13 +1,14 @@
 {
-  "name": "Sunnah Hadits Doa App",
-  "short_name": "SunnahApp",
-  "start_url": ".",
+  "name": "Jendela Islam Gold Edition",
+  "short_name": "Jendela Islam",
+  "start_url": "/index.html",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#128C7E",
+  "background_color": "#f8f9fa",
+  "theme_color": "#12795a",
+  "orientation": "portrait",
   "icons": [
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/3253/3253139.png",
+      "src": "https://cdn-icons-png.flaticon.com/512/3073/3073998.png",
       "sizes": "512x512",
       "type": "image/png"
     }
