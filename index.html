@@ -6,28 +6,29 @@
     <meta name="theme-color" content="#12795a">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Jendela Islam v2.0 Gold Edition</title>
+    <title>Jendela Islam v2.0</title>
     <link rel="manifest" href="manifest.json">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { background-color: #f8f9fa; color: #333; font-family: sans-serif; margin: 0; padding-bottom: 120px; -webkit-tap-highlight-color: transparent; transition: 0.3s; user-select: none; }
-        .top-header { background-color: #12795a; border-bottom-left-radius: 40px; border-bottom-right-radius: 40px; padding: 40px 24px 45px 24px; color: white; position: relative; }
+        body { background-color: #f8f9fa; color: #333; font-family: sans-serif; margin: 0; -webkit-tap-highlight-color: transparent; transition: 0.3s; user-select: none; }
+        .top-header { background-color: #12795a; border-bottom-left-radius: 40px; border-bottom-right-radius: 40px; padding: 40px 24px 45px 24px; color: white; position: relative; box-shadow: 0 10px 30px rgba(18, 121, 90, 0.15); }
         .jam-text { font-size: 60px; font-weight: 800; line-height: 1.1; letter-spacing: -1px; }
+        
         .icon-btn { width: 45px; height: 45px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; cursor: pointer; transition: 0.2s; }
         .icon-btn:active { transform: scale(0.9); background: rgba(255,255,255,0.3); }
+        
         .location-tag { background-color: #ef4444; color: white; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: bold; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(239, 68, 68, 0.4); cursor: pointer; transition: 0.2s; }
         .location-tag:active { transform: scale(0.95); }
+        
         .sholat-item { background: rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 12px 2px; flex: 1; text-align: center; border: 1px solid rgba(255,255,255,0.1); transition: 0.3s; }
         .sholat-item.active { background: #ffcc00; color: #12795a; box-shadow: 0 0 20px rgba(255, 204, 0, 0.6); border: none; }
-        .btn-sync { background-color: #14b8a6; color: white; padding: 16px 30px; border-radius: 30px; font-weight: 800; font-size: 16px; width: auto; min-width: 250px; display: inline-flex; justify-content: center; align-items: center; gap: 10px; margin-top: 25px; border: none; cursor: pointer; transition: 0.3s; box-shadow: 0 10px 20px rgba(20, 184, 166, 0.3); }
-        .btn-sync:active { transform: scale(0.95); box-shadow: 0 5px 10px rgba(20, 184, 166, 0.2); }
-        .bottom-nav { position: fixed; bottom: 20px; left: 40px; right: 40px; background: white; border-radius: 40px; padding: 15px 30px; display: flex; justify-content: space-around; box-shadow: 0 10px 40px rgba(0,0,0,0.1); z-index: 100; transition: 0.3s; }
-        .nav-item { cursor: pointer; transition: 0.2s; display: flex; flex-direction: column; align-items: center; gap: 4px; }
-        .nav-item:active { transform: scale(0.8); }
+        
+        .hak-cipta { text-align: center; padding: 40px 20px; color: #9ca3af; font-size: 13px; font-weight: bold; letter-spacing: 1px; }
     </style>
 </head>
 <body>
+
     <div class="top-header">
         <div class="flex justify-between items-start">
             <div class="pt-2">
@@ -35,80 +36,124 @@
                 <p id="tanggal" class="text-[15px] opacity-90 mt-2 font-medium">Memuat Tanggal...</p>
                 <p class="text-yellow-400 font-bold text-[15px] mt-1">🌙 15 Syawal 1447 H</p>
             </div>
+            
             <div class="flex flex-col items-end">
-                <div class="icon-btn" onclick="toggleMute()" id="btn-sound"><i class="fas fa-volume-up text-xl text-gray-200"></i></div>
-                <div class="icon-btn" onclick="toggleTheme()" id="btn-theme"><i class="fas fa-moon text-yellow-400 text-xl"></i></div>
+                <div class="icon-btn" onclick="toggleMute()" id="btn-sound">
+                    <i class="fas fa-volume-up text-xl text-gray-200"></i>
+                </div>
+                <div class="icon-btn" onclick="toggleTheme()" id="btn-theme">
+                    <i class="fas fa-moon text-yellow-400 text-xl"></i>
+                </div>
             </div>
         </div>
-        <div class="flex justify-between items-center mt-8 px-1">
-            <span class="text-[12px] font-bold tracking-widest uppercase opacity-90">Menuju Maghrib</span>
-            <div class="location-tag" onclick="gantiWilayah()"><i class="fas fa-map-marker-alt"></i> <span id="nama-kota">Sumedang</span></div>
+
+        <div class="flex justify-end items-center mt-8 px-1">
+            <div class="location-tag" onclick="gantiWilayah()">
+                <i class="fas fa-map-marker-alt"></i> <span id="nama-kota">Memuat...</span>
+            </div>
         </div>
+
         <div class="flex justify-between gap-2 mt-5">
-            <div class="sholat-item"><div class="text-[9px] font-bold opacity-70 uppercase tracking-wide">Subuh</div><div id="waktu-subuh" class="text-[15px] font-extrabold mt-1">04:33</div></div>
-            <div class="sholat-item"><div class="text-[9px] font-bold opacity-70 uppercase tracking-wide">Dzuhur</div><div id="waktu-dzuhur" class="text-[15px] font-extrabold mt-1">11:52</div></div>
-            <div class="sholat-item"><div class="text-[9px] font-bold opacity-70 uppercase tracking-wide">Ashar</div><div id="waktu-ashar" class="text-[15px] font-extrabold mt-1">15:09</div></div>
-            <div class="sholat-item active"><div class="text-[9px] font-bold uppercase tracking-wide">Maghrib</div><div id="waktu-maghrib" class="text-[15px] font-extrabold mt-1">17:52</div></div>
-            <div class="sholat-item"><div class="text-[9px] font-bold opacity-70 uppercase tracking-wide">Isya</div><div id="waktu-isya" class="text-[15px] font-extrabold mt-1">19:02</div></div>
+            <div class="sholat-item"><div class="text-[9px] font-bold opacity-70 uppercase tracking-wide">Subuh</div><div id="waktu-subuh" class="text-[15px] font-extrabold mt-1">--:--</div></div>
+            <div class="sholat-item"><div class="text-[9px] font-bold opacity-70 uppercase tracking-wide">Dzuhur</div><div id="waktu-dzuhur" class="text-[15px] font-extrabold mt-1">--:--</div></div>
+            <div class="sholat-item"><div class="text-[9px] font-bold opacity-70 uppercase tracking-wide">Ashar</div><div id="waktu-ashar" class="text-[15px] font-extrabold mt-1">--:--</div></div>
+            <div class="sholat-item active"><div class="text-[9px] font-bold uppercase tracking-wide">Maghrib</div><div id="waktu-maghrib" class="text-[15px] font-extrabold mt-1">--:--</div></div>
+            <div class="sholat-item"><div class="text-[9px] font-bold opacity-70 uppercase tracking-wide">Isya</div><div id="waktu-isya" class="text-[15px] font-extrabold mt-1">--:--</div></div>
         </div>
     </div>
 
-    <div class="px-6 mt-4"><h2 id="teks-notif" class="text-[17px] text-gray-800" style="font-family: sans-serif;">Notifikasi</h2></div>
-
-    <div class="text-center px-6 mt-12">
-        <h2 id="teks-judul" class="text-[22px] font-extrabold text-gray-800">Pengaturan Aplikasi</h2>
-        <p class="text-gray-400 text-[13px] mt-1">Jendela Islam v2.0 Gold Edition</p>
-        <button class="btn-sync" onclick="syncSystem()"><i id="sync-icon" class="fas fa-sync"></i> Sinkronisasi Sistem</button>
-        <p class="text-gray-400 text-[11px] mt-16 opacity-60">© 2026 Ikram Cyber. Hak Cipta Dilindungi.</p>
+    <div class="hak-cipta">
+        © 2026 ikram-cyber
     </div>
 
-    <div class="bottom-nav" id="nav-bawah">
-        <div class="nav-item text-orange-400" onclick="location.reload()"><i class="fas fa-home text-[24px]"></i><span class="text-[11px] font-bold">Beranda</span></div>
-        <div class="nav-item text-[#12795a]" onclick="alert('Membuka Setelan Aplikasi')"><i class="fas fa-cog text-[24px]"></i><span class="text-[11px] font-bold">Setelan</span></div>
-    </div>
+    <audio id="audio-adzan" src="https://www.islamcan.com/audio/adhan/azan2.mp3" preload="none"></audio>
 
     <script>
+        let isMuted = false;
+        let lastAdzanPlayed = "";
+        const audioAdzan = document.getElementById('audio-adzan');
+        
+        // Cek apakah ada kota yang disave di memori, kalau nggak ada default Sumedang
+        let kotaTersimpan = localStorage.getItem("kotaPilihan") || "Sumedang";
+
         function updateJam() {
             const now = new Date();
             const h = String(now.getHours()).padStart(2, '0');
             const m = String(now.getMinutes()).padStart(2, '0');
             const s = String(now.getSeconds()).padStart(2, '0');
+            const waktuSekarang = h + ":" + m;
+            
             document.getElementById('jam').innerText = h + "." + m + "." + s;
             document.getElementById('tanggal').innerText = now.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+
+            if (!isMuted) {
+                const jadwal = [
+                    document.getElementById('waktu-subuh').innerText,
+                    document.getElementById('waktu-dzuhur').innerText,
+                    document.getElementById('waktu-ashar').innerText,
+                    document.getElementById('waktu-maghrib').innerText,
+                    document.getElementById('waktu-isya').innerText
+                ];
+
+                if (jadwal.includes(waktuSekarang) && s === '00' && lastAdzanPlayed !== waktuSekarang) {
+                    audioAdzan.play().catch(e => console.log("Autoplay diblokir browser"));
+                    lastAdzanPlayed = waktuSekarang;
+                }
+            }
         }
         setInterval(updateJam, 1000); updateJam();
 
-        async function gantiWilayah() {
-            let kotaBaru = prompt("Masukkan nama Kota/Kabupaten:", "");
-            if (kotaBaru && kotaBaru.trim() !== "") {
-                document.getElementById('nama-kota').innerText = "Mencari...";
-                try {
-                    let today = new Date();
-                    let dd = String(today.getDate()).padStart(2, '0'); let mm = String(today.getMonth() + 1).padStart(2, '0'); let yyyy = today.getFullYear();
-                    let response = await fetch(`https://api.aladhan.com/v1/timingsByCity/${dd}-${mm}-${yyyy}?city=${kotaBaru}&country=Indonesia&method=20`);
-                    let data = await response.json();
-                    if(data.code === 200) {
-                        let timings = data.data.timings;
-                        document.getElementById('waktu-subuh').innerText = timings.Fajr; document.getElementById('waktu-dzuhur').innerText = timings.Dhuhr;
-                        document.getElementById('waktu-ashar').innerText = timings.Asr; document.getElementById('waktu-maghrib').innerText = timings.Maghrib;
-                        document.getElementById('waktu-isya').innerText = timings.Isha;
-                        document.getElementById('nama-kota').innerText = kotaBaru.charAt(0).toUpperCase() + kotaBaru.slice(1).toLowerCase();
-                    }
-                } catch (e) { alert("Error mengambil jadwal."); }
+        // Fungsi buat ngambil jadwal sekaligus update ke memori
+        async function muatJadwal(kota) {
+            document.getElementById('nama-kota').innerText = "Mencari...";
+            try {
+                let today = new Date();
+                let dd = String(today.getDate()).padStart(2, '0'); let mm = String(today.getMonth() + 1).padStart(2, '0'); let yyyy = today.getFullYear();
+                let response = await fetch(`https://api.aladhan.com/v1/timingsByCity/${dd}-${mm}-${yyyy}?city=${kota}&country=Indonesia&method=20`);
+                let data = await response.json();
+                
+                if(data.code === 200) {
+                    let timings = data.data.timings;
+                    document.getElementById('waktu-subuh').innerText = timings.Fajr; document.getElementById('waktu-dzuhur').innerText = timings.Dhuhr;
+                    document.getElementById('waktu-ashar').innerText = timings.Asr; document.getElementById('waktu-maghrib').innerText = timings.Maghrib;
+                    document.getElementById('waktu-isya').innerText = timings.Isha;
+                    
+                    let namaKotaKapital = kota.charAt(0).toUpperCase() + kota.slice(1).toLowerCase();
+                    document.getElementById('nama-kota').innerText = namaKotaKapital;
+                    
+                    // Ini kuncinya: Simpan kota ke memori HP!
+                    localStorage.setItem("kotaPilihan", namaKotaKapital);
+                } else {
+                    alert("Kota tidak ditemukan. Kembali ke wilayah sebelumnya.");
+                    document.getElementById('nama-kota').innerText = kotaTersimpan;
+                }
+            } catch (e) { 
+                alert("Error koneksi saat mengambil jadwal."); 
+                document.getElementById('nama-kota').innerText = kotaTersimpan;
             }
         }
 
-        function syncSystem() {
-            const btn = document.querySelector('.btn-sync'); const icon = document.getElementById('sync-icon'); icon.classList.add('fa-spin');
-            btn.innerHTML = '<i class="fas fa-sync fa-spin"></i> Menyinkronkan...';
-            setTimeout(() => { btn.innerHTML = '<i class="fas fa-check"></i> Berhasil Sinkron'; setTimeout(() => { btn.innerHTML = '<i class="fas fa-sync"></i> Sinkronisasi Sistem'; icon.classList.remove('fa-spin'); }, 2000); }, 1500);
+        async function gantiWilayah() {
+            let kotaBaru = prompt("Masukkan nama Kota/Kabupaten:", kotaTersimpan);
+            if (kotaBaru && kotaBaru.trim() !== "") {
+                muatJadwal(kotaBaru.trim());
+                kotaTersimpan = kotaBaru.trim(); // Update variabel lokal juga
+            }
         }
 
-        let isMuted = false;
+        // Jalankan fungsi muat jadwal secara otomatis saat web baru dibuka
+        muatJadwal(kotaTersimpan);
+
         function toggleMute() {
             const btn = document.getElementById('btn-sound');
-            btn.innerHTML = isMuted ? '<i class="fas fa-volume-up text-xl text-gray-200"></i>' : '<i class="fas fa-volume-mute text-xl text-gray-200"></i>';
             isMuted = !isMuted;
+            audioAdzan.muted = isMuted;
+            if (isMuted) {
+                btn.innerHTML = '<i class="fas fa-volume-mute text-xl text-gray-200"></i>';
+                audioAdzan.pause();
+            } else {
+                btn.innerHTML = '<i class="fas fa-volume-up text-xl text-gray-200"></i>';
+            }
         }
 
         let isDark = false;
@@ -116,15 +161,11 @@
             const btn = document.getElementById('btn-theme'); isDark = !isDark;
             btn.innerHTML = isDark ? '<i class="fas fa-sun text-yellow-400 text-xl"></i>' : '<i class="fas fa-moon text-yellow-400 text-xl"></i>';
             document.body.style.backgroundColor = isDark ? "#111827" : "#f8f9fa";
-            document.getElementById('teks-notif').style.color = isDark ? "#f9fafb" : "#1f2937";
-            document.getElementById('teks-judul').style.color = isDark ? "#f9fafb" : "#1f2937";
-            document.getElementById('nav-bawah').style.backgroundColor = isDark ? "#1f2937" : "white";
         }
 
-        // Pendaftaran Service Worker (Syarat PWA)
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js').then(reg => console.log('SW terdaftar!', reg)).catch(err => console.log('SW Gagal', err));
+                navigator.serviceWorker.register('/sw.js');
             });
         }
     </script>
