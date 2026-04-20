@@ -32,7 +32,7 @@
             <div class="pt-2">
                 <div id="jam" class="jam-text">00.00.00</div>
                 <p id="tanggal" class="text-[15px] opacity-90 mt-2 font-medium">Memuat Tanggal...</p>
-                <p class="text-yellow-400 font-bold text-[15px] mt-1">🌙 15 Syawal 1447 H</p>
+                <p id="tanggal-hijriah" class="text-yellow-400 font-bold text-[15px] mt-1">🌙 Memuat Hijriah...</p>
             </div>
 
             <div class="flex flex-col items-end">
@@ -72,7 +72,7 @@
         </div>
     </div>
 
-    <div id="inspirasi-card" class="inspirasi-card">
+    <div id="inspirasi-card" class="inspirasi-card" style="margin-bottom: 12px;">
         <div style="position: absolute; right: -20px; top: -20px; opacity: 0.05; font-size: 140px; color: #12795a;">
             <i class="fas fa-quran"></i>
         </div>
@@ -82,6 +82,18 @@
         <div id="quran-text" class="font-arab" style="text-align: right; font-size: 26px; line-height: 2; margin-bottom: 16px; font-weight: bold; color: #333; position: relative; z-index: 10;">Mencari hikmah...</div>
         <div id="quran-terjemahan" style="font-size: 14px; font-style: italic; color: #666; margin-bottom: 12px; line-height: 1.6; position: relative; z-index: 10;"></div>
         <div id="quran-surah" style="font-size: 12px; font-weight: bold; color: #12795a; text-align: right; position: relative; z-index: 10;"></div>
+    </div>
+
+    <div id="doa-card" class="inspirasi-card" style="margin-top: 0;">
+        <div style="position: absolute; right: -20px; bottom: -20px; opacity: 0.05; font-size: 120px; color: #12795a;">
+            <i class="fas fa-praying-hands"></i>
+        </div>
+        <div style="display: flex; align-items: center; gap: 8px; color: #12795a; font-weight: bold; font-size: 13px; text-transform: uppercase; margin-bottom: 16px; letter-spacing: 1px;">
+            <i class="fas fa-hands"></i> Doa Harian
+        </div>
+        <div id="doa-judul" style="font-size: 14px; font-weight: bold; color: #333; margin-bottom: 12px; position: relative; z-index: 10;">Memuat doa...</div>
+        <div id="doa-arab" class="font-arab" style="text-align: right; font-size: 22px; line-height: 2; margin-bottom: 12px; font-weight: bold; color: #333; position: relative; z-index: 10;"></div>
+        <div id="doa-arti" style="font-size: 13px; font-style: italic; color: #666; line-height: 1.6; position: relative; z-index: 10;"></div>
     </div>
 
     <div class="hak-cipta">
@@ -176,6 +188,12 @@
                     document.getElementById('waktu-maghrib').innerText = timings.Maghrib;
                     document.getElementById('waktu-isya').innerText = timings.Isha;
 
+                    // SYNC HIJRIAH OTOMATIS
+                    let hijri = data.data.date.hijri;
+                    let namaBulan = ["", "Muharram", "Shafar", "Rabiul Awal", "Rabiul Akhir", "Jumadil Awal", "Jumadil Akhir", "Rajab", "Sya'ban", "Ramadhan", "Syawal", "Dzulqa'dah", "Dzulhijjah"];
+                    let bulanIndo = namaBulan[hijri.month.number];
+                    document.getElementById('tanggal-hijriah').innerText = `🌙 ${hijri.day} ${bulanIndo} ${hijri.year} H`;
+
                     let namaKotaKapital = kota.charAt(0).toUpperCase() + kota.slice(1).toLowerCase();
                     document.getElementById('nama-kota').innerText = namaKotaKapital;
                     localStorage.setItem("kotaPilihan", namaKotaKapital);
@@ -194,7 +212,6 @@
             }
         }
 
-        // FUNGSI BARU: TARIK AYAT RANDOM
         async function muatAyat() {
             try {
                 let response = await fetch('https://api.alquran.cloud/v1/ayah/random/editions/quran-uthmani,id.indonesian');
@@ -213,8 +230,26 @@
             }
         }
 
+        // KUMPULAN DOA HARIAN (Di-load cepat tanpa nunggu API luar)
+        const kumpulanDoa = [
+            { judul: "Doa Memohon Kebaikan Dunia Akhirat", arab: "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ", arti: "Ya Tuhan kami, berilah kami kebaikan di dunia dan kebaikan di akhirat dan peliharalah kami dari siksa neraka." },
+            { judul: "Doa Kelancaran Urusan", arab: "رَبِّ اشْرَحْ لِي صَدْرِي وَيَسِّرْ لِي أَمْرِي", arti: "Ya Tuhanku, lapangkanlah untukku dadaku, dan mudahkanlah untukku urusanku." },
+            { judul: "Doa Meminta Ilmu yang Bermanfaat", arab: "اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا وَرِزْقًا طَيِّبًا وَعَمَلًا مُتَقَبَّلًا", arti: "Ya Allah, sesungguhnya aku memohon kepada-Mu ilmu yang bermanfaat, rezeki yang baik, dan amal yang diterima." },
+            { judul: "Doa Ketetapan Hati", arab: "يَا مُقَلِّبَ الْقُلُوبِ ثَبِّتْ قَلْبِي عَلَى دِينِكَ", arti: "Wahai Dzat yang membolak-balikkan hati, tetapkanlah hatiku di atas agama-Mu." },
+            { judul: "Doa Memohon Ampunan", arab: "اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ خَلَقْتَنِي وَأَنَا عَبْدُكَ", arti: "Ya Allah, Engkau adalah Tuhanku, tidak ada Tuhan yang berhak diibadahi selain Engkau, Engkaulah yang menciptakanku dan aku adalah hamba-Mu." },
+            { judul: "Doa Berlindung dari Penyakit", arab: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْبَرَصِ وَالْجُنُونِ وَالْجُذَامِ وَمِنْ سَيِّئِ الأَسْقَامِ", arti: "Ya Allah, aku berlindung kepada-Mu dari penyakit belang, gila, kusta, dan dari segala penyakit yang buruk/mengerikan." }
+        ];
+
+        function muatDoa() {
+            let acak = kumpulanDoa[Math.floor(Math.random() * kumpulanDoa.length)];
+            document.getElementById('doa-judul').innerText = acak.judul;
+            document.getElementById('doa-arab').innerText = acak.arab;
+            document.getElementById('doa-arti').innerText = `"${acak.arti}"`;
+        }
+
         muatJadwal(kotaTersimpan);
         muatAyat();
+        muatDoa();
 
         let isDark = false;
         function toggleTheme() {
@@ -222,15 +257,21 @@
             btn.innerHTML = isDark ? '<i class="fas fa-sun text-yellow-400 text-xl"></i>' : '<i class="fas fa-moon text-yellow-400 text-xl"></i>';
             document.body.style.backgroundColor = isDark ? "#111827" : "#f8f9fa";
             
-            // Adaptasi warna untuk card inspirasi saat dark mode
-            const card = document.getElementById('inspirasi-card');
-            if (card) {
-                card.style.backgroundColor = isDark ? "#1f2937" : "#ffffff";
-                card.style.borderColor = isDark ? "#374151" : "#f3f4f6";
-                card.style.boxShadow = isDark ? "0 10px 30px rgba(0,0,0,0.3)" : "0 10px 30px rgba(0,0,0,0.05)";
-                document.getElementById('quran-text').style.color = isDark ? "#f3f4f6" : "#333333";
-                document.getElementById('quran-terjemahan').style.color = isDark ? "#9ca3af" : "#666666";
-            }
+            // Adaptasi warna untuk card inspirasi & doa saat dark mode
+            const cards = [document.getElementById('inspirasi-card'), document.getElementById('doa-card')];
+            cards.forEach(card => {
+                if (card) {
+                    card.style.backgroundColor = isDark ? "#1f2937" : "#ffffff";
+                    card.style.borderColor = isDark ? "#374151" : "#f3f4f6";
+                    card.style.boxShadow = isDark ? "0 10px 30px rgba(0,0,0,0.3)" : "0 10px 30px rgba(0,0,0,0.05)";
+                }
+            });
+
+            document.getElementById('quran-text').style.color = isDark ? "#f3f4f6" : "#333333";
+            document.getElementById('quran-terjemahan').style.color = isDark ? "#9ca3af" : "#666666";
+            document.getElementById('doa-judul').style.color = isDark ? "#e5e7eb" : "#333333";
+            document.getElementById('doa-arab').style.color = isDark ? "#f3f4f6" : "#333333";
+            document.getElementById('doa-arti').style.color = isDark ? "#9ca3af" : "#666666";
         }
     </script>
 </body>
