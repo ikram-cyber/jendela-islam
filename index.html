@@ -6,10 +6,9 @@
     <meta name="theme-color" content="#12795a">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Jendela Islam v3.1 | Falak Analytics</title>
+    <title>Jendela Islam v3.2</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap');
         body { background-color: #f8f9fa; color: #333; font-family: sans-serif; margin: 0; -webkit-tap-highlight-color: transparent; transition: 0.3s; user-select: none; }
@@ -24,11 +23,6 @@
         .inspirasi-card { background: white; border-radius: 20px; padding: 24px; margin: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); position: relative; overflow: hidden; border: 1px solid #f3f4f6; transition: 0.3s; }
         .font-arab { font-family: 'Amiri', serif; }
         .hak-cipta { text-align: center; padding: 20px 20px 40px 20px; color: #9ca3af; font-size: 13px; font-weight: bold; letter-spacing: 1px; }
-        .falak-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
-        .falak-box { background: #f8fafc; padding: 12px; border-radius: 12px; border: 1px solid #e2e8f0; transition: 0.3s; }
-        .falak-box.special { background: #f0fdf4 !important; border-color: #a7f3d0 !important; }
-        .falak-title { font-size: 10px; color: #64748b; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; }
-        .falak-val { font-size: 16px; font-weight: 900; color: #12795a; margin-top: 4px; }
     </style>
 </head>
 <body>
@@ -61,33 +55,6 @@
             <div id="item-ashar" class="sholat-item"><div class="text-[9px] font-bold opacity-70 uppercase tracking-wide">Ashar</div><div id="waktu-ashar" class="text-[15px] font-extrabold mt-1">--:--</div></div>
             <div id="item-maghrib" class="sholat-item"><div class="text-[9px] font-bold uppercase tracking-wide">Maghrib</div><div id="waktu-maghrib" class="text-[15px] font-extrabold mt-1">--:--</div></div>
             <div id="item-isya" class="sholat-item"><div class="text-[9px] font-bold opacity-70 uppercase tracking-wide">Isya</div><div id="waktu-isya" class="text-[15px] font-extrabold mt-1">--:--</div></div>
-        </div>
-    </div>
-
-    <div id="falak-card" class="inspirasi-card">
-        <div style="display: flex; align-items: center; gap: 8px; color: #12795a; font-weight: 900; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid #f3f4f6; padding-bottom: 10px;">
-            <i class="fas fa-compass"></i> Ilmu Falak & Presisi Kiblat
-        </div>
-        <p style="font-size:11px; color:#64748b; margin-top:10px;">Kalkulasi trigonometri bola (*Spherical Trigonometry*) arah kiblat berdasarkan koordinat geolokasi kota.</p>
-        
-        <div class="falak-grid">
-            <div class="falak-box">
-                <div class="falak-title">Koordinat Geografis (\(\phi_1, \lambda_1\))</div>
-                <div class="falak-val"><span id="f-lat">0</span>°, <span id="f-lon">0</span>°</div>
-            </div>
-            <div class="falak-box">
-                <div class="falak-title">Arah Kiblat (Azimuth \(\theta\))</div>
-                <div class="falak-val" id="f-qibla">0°</div>
-            </div>
-            <div class="falak-box special" style="grid-column: span 2;">
-                <div class="falak-title" style="color:#047857;">Jarak Orthodromic ke Ka'bah (Haversine)</div>
-                <div class="falak-val" style="font-size:22px; color:#064e3b;" id="f-jarak">0 Km</div>
-            </div>
-        </div>
-
-        <div style="margin-top:15px; padding:10px; background:#fff; border:1px solid #e2e8f0; border-radius:8px; overflow-x:auto;">
-            <div style="font-size:10px; font-weight:bold; color:#94a3b8; text-align:center; margin-bottom:5px;">FORMULA TRIGONOMETRI ARAH KIBLAT</div>
-            $$ \theta = \arctan \left( \frac{\sin(\Delta \lambda)}{\cos \phi_1 \tan \phi_2 - \sin \phi_1 \cos(\Delta \lambda)} \right) $$
         </div>
     </div>
 
@@ -165,43 +132,11 @@
 
         setInterval(updateJam, 1000);
 
-        // ILMU FALAK ENGINE (BUG FIXED: Presisi Rumus Qibla & Haversine)
-        function hitungFalak(lat1, lon1) {
-            lat1 = parseFloat(lat1);
-            lon1 = parseFloat(lon1);
-            
-            const lat2 = 21.422487; // Kaaba Latitude
-            const lon2 = 39.826206; // Kaaba Longitude
-            
-            const R = 6371; // Radius Bumi (Km)
-            const rLat1 = lat1 * Math.PI / 180; const rLon1 = lon1 * Math.PI / 180;
-            const rLat2 = lat2 * Math.PI / 180; const rLon2 = lon2 * Math.PI / 180;
-            const dLon = rLon2 - rLon1; // Selisih Bujur (\Delta \lambda)
-            const dLat = rLat2 - rLat1;
-
-            // 1. Arah Kiblat (Disesuaikan persis dengan rumus LaTeX)
-            const y = Math.sin(dLon);
-            const x = Math.cos(rLat1) * Math.tan(rLat2) - Math.sin(rLat1) * Math.cos(dLon);
-            let qibla = Math.atan2(y, x) * 180 / Math.PI;
-            qibla = (qibla + 360) % 360;
-
-            // 2. Jarak ke Ka'bah (Haversine Formula)
-            const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(rLat1) * Math.cos(rLat2) * Math.sin(dLon/2) * Math.sin(dLon/2);
-            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-            const jarak = R * c;
-
-            document.getElementById('f-lat').innerText = lat1.toFixed(2);
-            document.getElementById('f-lon').innerText = lon1.toFixed(2);
-            document.getElementById('f-qibla').innerText = qibla.toFixed(2) + "°";
-            document.getElementById('f-jarak').innerText = jarak.toLocaleString('id-ID', {maximumFractionDigits: 1}) + " Km";
-        }
-
         async function muatJadwal(kota) {
             document.getElementById('nama-kota').innerText = "Mencari...";
             try {
                 let today = new Date(); let dd = String(today.getDate()).padStart(2, '0'); let mm = String(today.getMonth() + 1).padStart(2, '0'); let yyyy = today.getFullYear();
                 
-                // BUG FIX: Menggunakan timingsByAddress untuk pencarian Global (Dunia)
                 let response = await fetch(`https://api.aladhan.com/v1/timingsByAddress/${dd}-${mm}-${yyyy}?address=${kota}&method=20`);
                 let data = await response.json();
 
@@ -218,13 +153,10 @@
                     let bulanIndo = namaBulan[hijri.month.number];
                     document.getElementById('tanggal-hijriah').innerText = `🌙 ${hijri.day} ${bulanIndo} ${hijri.year} H`;
 
-                    // Format nama kota biar cantik
                     let namaKotaKapital = kota.charAt(0).toUpperCase() + kota.slice(1).toLowerCase();
                     document.getElementById('nama-kota').innerText = namaKotaKapital;
                     localStorage.setItem("kotaPilihan", namaKotaKapital);
                     
-                    // Trigger Kalkulasi Falak dengan koordinat riil global
-                    hitungFalak(data.data.meta.latitude, data.data.meta.longitude);
                     updateJam();
                 } else {
                     alert("Kota tidak ditemukan. Silakan coba nama kota yang lebih umum.");
@@ -276,19 +208,12 @@
             btn.innerHTML = isDark ? '<i class="fas fa-sun text-yellow-400 text-xl"></i>' : '<i class="fas fa-moon text-yellow-400 text-xl"></i>';
             document.body.style.backgroundColor = isDark ? "#111827" : "#f8f9fa";
             
-            const cards = [document.getElementById('inspirasi-card'), document.getElementById('doa-card'), document.getElementById('falak-card')];
+            const cards = [document.getElementById('inspirasi-card'), document.getElementById('doa-card')];
             cards.forEach(card => {
                 if (card) {
                     card.style.backgroundColor = isDark ? "#1f2937" : "#ffffff";
                     card.style.borderColor = isDark ? "#374151" : "#f3f4f6";
                     card.style.boxShadow = isDark ? "0 10px 30px rgba(0,0,0,0.3)" : "0 10px 30px rgba(0,0,0,0.05)";
-                }
-            });
-
-            document.querySelectorAll('.falak-box').forEach(b => {
-                if(!b.classList.contains('special')) { 
-                    b.style.backgroundColor = isDark ? '#374151' : '#f8fafc'; 
-                    b.style.borderColor = isDark ? '#4b5563' : '#e2e8f0'; 
                 }
             });
 
