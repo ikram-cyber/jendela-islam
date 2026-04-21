@@ -165,7 +165,7 @@
 
         setInterval(updateJam, 1000);
 
-        // BUG FIX: ParseFloat untuk mengamankan Data String dari API
+        // ILMU FALAK ENGINE (BUG FIXED: Presisi Rumus Qibla & Haversine)
         function hitungFalak(lat1, lon1) {
             lat1 = parseFloat(lat1);
             lon1 = parseFloat(lon1);
@@ -176,12 +176,12 @@
             const R = 6371; // Radius Bumi (Km)
             const rLat1 = lat1 * Math.PI / 180; const rLon1 = lon1 * Math.PI / 180;
             const rLat2 = lat2 * Math.PI / 180; const rLon2 = lon2 * Math.PI / 180;
-            const dLon = rLon2 - rLon1;
+            const dLon = rLon2 - rLon1; // Selisih Bujur (\Delta \lambda)
             const dLat = rLat2 - rLat1;
 
-            // 1. Arah Kiblat (Azimuth)
-            const y = Math.sin(dLon) * Math.cos(rLat2);
-            const x = Math.cos(rLat1) * Math.sin(rLat2) - Math.sin(rLat1) * Math.cos(rLat2) * Math.cos(dLon);
+            // 1. Arah Kiblat (Disesuaikan persis dengan rumus LaTeX)
+            const y = Math.sin(dLon);
+            const x = Math.cos(rLat1) * Math.tan(rLat2) - Math.sin(rLat1) * Math.cos(dLon);
             let qibla = Math.atan2(y, x) * 180 / Math.PI;
             qibla = (qibla + 360) % 360;
 
@@ -200,7 +200,9 @@
             document.getElementById('nama-kota').innerText = "Mencari...";
             try {
                 let today = new Date(); let dd = String(today.getDate()).padStart(2, '0'); let mm = String(today.getMonth() + 1).padStart(2, '0'); let yyyy = today.getFullYear();
-                let response = await fetch(`https://api.aladhan.com/v1/timingsByCity/${dd}-${mm}-${yyyy}?city=${kota}&country=Indonesia&method=20`);
+                
+                // BUG FIX: Menggunakan timingsByAddress untuk pencarian Global (Dunia)
+                let response = await fetch(`https://api.aladhan.com/v1/timingsByAddress/${dd}-${mm}-${yyyy}?address=${kota}&method=20`);
                 let data = await response.json();
 
                 if(data.code === 200) {
@@ -216,13 +218,17 @@
                     let bulanIndo = namaBulan[hijri.month.number];
                     document.getElementById('tanggal-hijriah').innerText = `🌙 ${hijri.day} ${bulanIndo} ${hijri.year} H`;
 
+                    // Format nama kota biar cantik
                     let namaKotaKapital = kota.charAt(0).toUpperCase() + kota.slice(1).toLowerCase();
                     document.getElementById('nama-kota').innerText = namaKotaKapital;
                     localStorage.setItem("kotaPilihan", namaKotaKapital);
                     
-                    // Trigger Kalkulasi Falak (Robust Parsing)
+                    // Trigger Kalkulasi Falak dengan koordinat riil global
                     hitungFalak(data.data.meta.latitude, data.data.meta.longitude);
                     updateJam();
+                } else {
+                    alert("Kota tidak ditemukan. Silakan coba nama kota yang lebih umum.");
+                    document.getElementById('nama-kota').innerText = kotaTersimpan;
                 }
             } catch (e) {
                 document.getElementById('nama-kota').innerText = kotaTersimpan;
@@ -230,7 +236,7 @@
         }
 
         async function gantiWilayah() {
-            let kotaBaru = prompt("Masukkan nama Kota/Kabupaten:", kotaTersimpan);
+            let kotaBaru = prompt("Masukkan nama Kota/Kabupaten (Seluruh Dunia):", kotaTersimpan);
             if (kotaBaru && kotaBaru.trim() !== "") { muatJadwal(kotaBaru.trim()); kotaTersimpan = kotaBaru.trim(); }
         }
 
@@ -279,7 +285,6 @@
                 }
             });
 
-            // BUG FIX: Gunakan class check yang aman
             document.querySelectorAll('.falak-box').forEach(b => {
                 if(!b.classList.contains('special')) { 
                     b.style.backgroundColor = isDark ? '#374151' : '#f8fafc'; 
