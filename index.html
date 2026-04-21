@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#12795a">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Jendela Islam v3.0 | Falak Analytics</title>
+    <title>Jendela Islam v3.1 | Falak Analytics</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -25,7 +25,8 @@
         .font-arab { font-family: 'Amiri', serif; }
         .hak-cipta { text-align: center; padding: 20px 20px 40px 20px; color: #9ca3af; font-size: 13px; font-weight: bold; letter-spacing: 1px; }
         .falak-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
-        .falak-box { background: #f8fafc; padding: 12px; border-radius: 12px; border: 1px solid #e2e8f0; }
+        .falak-box { background: #f8fafc; padding: 12px; border-radius: 12px; border: 1px solid #e2e8f0; transition: 0.3s; }
+        .falak-box.special { background: #f0fdf4 !important; border-color: #a7f3d0 !important; }
         .falak-title { font-size: 10px; color: #64748b; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; }
         .falak-val { font-size: 16px; font-weight: 900; color: #12795a; margin-top: 4px; }
     </style>
@@ -76,9 +77,9 @@
             </div>
             <div class="falak-box">
                 <div class="falak-title">Arah Kiblat (Azimuth \(\theta\))</div>
-                <div class="falak-val" id="f-qibla">0° U-B</div>
+                <div class="falak-val" id="f-qibla">0°</div>
             </div>
-            <div class="falak-box" style="grid-column: span 2; background:#f0fdf4; border-color:#a7f3d0;">
+            <div class="falak-box special" style="grid-column: span 2;">
                 <div class="falak-title" style="color:#047857;">Jarak Orthodromic ke Ka'bah (Haversine)</div>
                 <div class="falak-val" style="font-size:22px; color:#064e3b;" id="f-jarak">0 Km</div>
             </div>
@@ -110,7 +111,7 @@
         <div id="doa-arti" style="font-size: 13px; font-style: italic; color: #666; line-height: 1.6; position: relative; z-index: 10;"></div>
     </div>
 
-    <div class="hak-cipta">© 2026 Ikram Cyber System</div>
+    <div class="hak-cipta">&copy; 2026 Ikram Cyber System</div>
 
     <audio id="audio-adzan" src="https://www.islamcan.com/audio/adhan/azan2.mp3" preload="none"></audio>
 
@@ -164,12 +165,14 @@
 
         setInterval(updateJam, 1000);
 
-        // ILMU FALAK ENGINE: Qibla & Distance Calculation
+        // BUG FIX: ParseFloat untuk mengamankan Data String dari API
         function hitungFalak(lat1, lon1) {
+            lat1 = parseFloat(lat1);
+            lon1 = parseFloat(lon1);
+            
             const lat2 = 21.422487; // Kaaba Latitude
             const lon2 = 39.826206; // Kaaba Longitude
             
-            // Konversi ke Radian
             const R = 6371; // Radius Bumi (Km)
             const rLat1 = lat1 * Math.PI / 180; const rLon1 = lon1 * Math.PI / 180;
             const rLat2 = lat2 * Math.PI / 180; const rLon2 = lon2 * Math.PI / 180;
@@ -217,7 +220,7 @@
                     document.getElementById('nama-kota').innerText = namaKotaKapital;
                     localStorage.setItem("kotaPilihan", namaKotaKapital);
                     
-                    // Trigger Kalkulasi Falak
+                    // Trigger Kalkulasi Falak (Robust Parsing)
                     hitungFalak(data.data.meta.latitude, data.data.meta.longitude);
                     updateJam();
                 }
@@ -276,8 +279,12 @@
                 }
             });
 
+            // BUG FIX: Gunakan class check yang aman
             document.querySelectorAll('.falak-box').forEach(b => {
-                if(!b.style.backgroundColor.includes('f0fdf4')) { b.style.backgroundColor = isDark ? '#374151' : '#f8fafc'; b.style.borderColor = isDark ? '#4b5563' : '#e2e8f0'; }
+                if(!b.classList.contains('special')) { 
+                    b.style.backgroundColor = isDark ? '#374151' : '#f8fafc'; 
+                    b.style.borderColor = isDark ? '#4b5563' : '#e2e8f0'; 
+                }
             });
 
             document.getElementById('quran-text').style.color = isDark ? "#f3f4f6" : "#333333";
